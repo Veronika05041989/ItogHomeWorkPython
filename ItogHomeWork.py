@@ -46,3 +46,25 @@ def read_notes():
                 print()
     except Exception as e:
         print("An error occurred while reading notes:", e)
+        
+def filter_notes_by_date(date):      
+    try:
+        if not os.path.exists(NOTES_FILE):
+            print("No notes found.")
+            return []
+        
+        with open(NOTES_FILE) as file:
+            notes = json.load(file)
+            filtered_notes = [note for note in notes if note["created_date"].split()[0] == date]
+            if not filtered_notes:
+                print("No notes found for the specified date.")
+                return []
+            
+            print("Notes found for the specified date:")
+            for i, note in enumerate(filtered_notes):
+                print(f"{i+1}. ID: {note['id']}, Title: {note['title']}")
+            return filtered_notes
+    except Exception as e:
+        print("An error occurred while filtering notes by date:", e)
+        return []
+
