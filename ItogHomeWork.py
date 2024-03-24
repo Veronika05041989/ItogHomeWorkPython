@@ -105,3 +105,21 @@ def edit_note(note_id):
     except Exception as e:
         print("An error occurred while editing note:", e)
 
+def delete_note(note_id):
+    try:
+        if not os.path.exists(NOTES_FILE):
+            print("No notes found.")
+            return
+
+        with open(NOTES_FILE, 'r') as file:
+            notes = json.load(file)
+
+        notes = [note for note in notes if note["id"] != note_id]
+        save_notes(notes)
+    except Exception as e:
+        print("An error occurred while deleting note:", e)
+
+def main():
+    while True:
+        print("1. Create a new note")
+
